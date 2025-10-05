@@ -1,0 +1,46 @@
+services:
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8088:80"
+      - "4448:443"
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5033:5000"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URI=${DATABASE_URI}
+      - PORT=${PORT}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET} 
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - CLOUDINARY_NAME=${CLOUDINARY_NAME}
+      - CLOUDINARY_KEY=${CLOUDINARY_KEY}
+      - CLOUDINARY_SECRET=${CLOUDINARY_SECRET}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - PAYMENT_SS_RETENTION_DAYS=30
+    networks:
+      - app-network
+    volumes:
+      - uploads:/app/uploads
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  uploads:

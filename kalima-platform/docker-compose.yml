@@ -11,7 +11,7 @@ services:
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
-      - backend
+      - fekra-backend
     networks:
       - fekra-network
 

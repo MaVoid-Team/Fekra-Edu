@@ -1,11 +1,11 @@
 services:
-  frontend:
+  fekra-frontend:
     build: 
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "8088:80"
-      - "4448:443"
+      - "8090:80"
+      - "4450:443"
     environment:
       - VITE_API_URL=${VITE_API_URL}
     volumes:
@@ -15,12 +15,12 @@ services:
     networks:
       - app-network
 
-  backend:
+  fekra-backend:
     build: 
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "5033:5000"
+      - "5035:5000"
     environment:
       - NODE_ENV=development
       - DATABASE_URI=${DATABASE_URI}
@@ -36,11 +36,11 @@ services:
     networks:
       - app-network
     volumes:
-      - uploads:/app/uploads
+      - fekra-uploads:/app/uploads
 
 networks:
-  app-network:
+  fekra-network:
     driver: bridge
 
 volumes:
-  uploads:
+  fekra-uploads:

@@ -13,7 +13,7 @@ services:
     depends_on:
       - backend
     networks:
-      - app-network
+      - fekra-network
 
   fekra-backend:
     build: 
@@ -34,7 +34,7 @@ services:
       - EMAIL_FROM=${EMAIL_FROM}
       - PAYMENT_SS_RETENTION_DAYS=30
     networks:
-      - app-network
+      - fekra-network
     volumes:
       - fekra-uploads:/app/uploads
 
